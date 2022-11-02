@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 
 
 //Aqui van a estar las pantallas
-import Login from './screens/Login';
+import Login from './screens/Inicio';
 
 const Tab = createBottomTabNavigator();
 
