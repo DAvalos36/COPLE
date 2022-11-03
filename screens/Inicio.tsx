@@ -1,16 +1,25 @@
 import React from 'react'
 import { ImageBackground, View, StyleSheet } from 'react-native'
 import { Button, Text } from '@ui-kitten/components'
+import  { BottomTabNavigationProp } from '@react-navigation/bottom-tabs'
 
+
+import { parametrosPantalla } from '../Navigations' 
 // import img from '../assets/Imagenes/inicio.jpg';
 const imagen = { uri: "https://reactjs.org/logo-og.png" };
-type Props = {}
 
-export default function Inicio({}: Props) {
+type propsPantall = BottomTabNavigationProp<parametrosPantalla, 'Inicio'>
+type Props = {
+    navigation: propsPantall
+}
+
+export default function Inicio({navigation}: Props) {
   return (
     <View style={{flex:1}}>
         <ImageBackground source={require('../assets/Imagenes/inicio.jpg')} resizeMode="cover" style={estilos.imagen} >
-            <Button size='giant' style={estilos.boton}>
+            <Button size='giant' style={estilos.boton}
+                onPress={() => navigation.navigate('Login')}
+            >
                 Iniciar Sesión
             </Button>
             <View style={estilos.row}>    
