@@ -7,11 +7,15 @@ import { NavigationContainer,  } from '@react-navigation/native';
 import Login from './screens/Login';
 import Consejos from './screens/Consejos';
 import Inicio from './screens/Inicio';
+import Multimedia from './screens/Multimedia';
+import Dia from './screens/Dia';
 
 export type parametrosPantalla = {
     Inicio: undefined,
     Login: undefined,
-    Consejos: undefined
+    Consejos: undefined,
+    Multimedia: undefined,
+    Dia: undefined
 }
 
 const Tab = createBottomTabNavigator<parametrosPantalla>();
@@ -32,13 +36,11 @@ const Tabs = () => {
             }}
            />
             <Tab.Screen name="Login" component={Login}/>
+            <Tab.Screen name="Dia" component={Dia}/>
 
 
-            <Tab.Screen name="Consejos" component={Consejos}
-                options={{
-                    headerShown: false,
-                }}
-            />
+            <Tab.Screen name='Multimedia' component={Multimedia} />
+            <Tab.Screen name="Consejos" component={Consejos}/>
         </Tab.Navigator>
     )
 }
