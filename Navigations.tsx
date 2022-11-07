@@ -10,12 +10,16 @@ import Inicio from './screens/Inicio';
 import Multimedia from './screens/Multimedia';
 import Dia from './screens/Dia';
 
+// Interfaces
+import { pantallaConsejos } from './types'
+
 export type parametrosPantalla = {
     Inicio: undefined,
     Login: undefined,
     Consejos: undefined,
     Multimedia: undefined,
-    Dia: undefined
+    Dia: undefined,
+    Noshe: undefined
 }
 
 const Tab = createBottomTabNavigator<parametrosPantalla>();
