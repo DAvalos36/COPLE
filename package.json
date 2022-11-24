@@ -12,6 +12,7 @@
     "@eva-design/eva": "^2.1.1",
     "@react-navigation/bottom-tabs": "^6.4.0",
     "@react-navigation/native": "^6.0.13",
+    "@supabase/supabase-js": "^2.1.1",
     "@ui-kitten/components": "^5.1.2",
     "expo": "~46.0.16",
     "expo-status-bar": "~1.4.0",
