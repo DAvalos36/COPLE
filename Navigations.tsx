@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { NavigationContainer,  } from '@react-navigation/native';
+import { supabase } from './supabase';
 
 
 //Aqui van a estar las pantallas
@@ -24,27 +25,40 @@ export type parametrosPantalla = {
 
 const Tab = createBottomTabNavigator<parametrosPantalla>();
 
+
 const Tabs = () => {
+    const [login, setLogin] = useState<boolean>(supabase.auth.getUser() != null)
+
+    supabase.auth.onAuthStateChange((event, session) => {
+        setLogin(session != null)
+    })
+
+
     return (
-        <Tab.Navigator
-        
-        >
-           <Tab.Screen name="Inicio" component={Inicio} 
-              options={{
-                // Oculta la cabecera
-                headerShown: false, 
-                // Oculta la barra de navegacion
-                tabBarStyle: {
-                    display: 'none'
-                }
-            }}
-           />
-            <Tab.Screen name="Login" component={Login}/>
-            <Tab.Screen name="Dia" component={Dia}/>
+        <Tab.Navigator>
+            {login ? (
+            <>
+                <Tab.Screen name="Inicio" component={Inicio} 
+                    options={{
+                        // Oculta la cabecera
+                        headerShown: false, 
+                        // Oculta la barra de navegacion
+                        tabBarStyle: {
+                            display: 'none'
+                        }
+                    }} 
+                />
+                <Tab.Screen name="Login" component={Login}/>
+            </>
+            ):(
+            <>
+                <Tab.Screen name="Dia" component={Dia}/>
 
 
-            <Tab.Screen name='Multimedia' component={Multimedia} />
-            <Tab.Screen name="Consejos" component={Consejos}/>
+                <Tab.Screen name='Multimedia' component={Multimedia} />
+                <Tab.Screen name="Consejos" component={Consejos}/>
+            </>
+            )}
         </Tab.Navigator>
     )
 }
