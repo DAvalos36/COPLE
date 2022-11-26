@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { NavigationContainer,  } from '@react-navigation/native';
 import { supabase } from './supabase';
@@ -6,6 +6,7 @@ import { supabase } from './supabase';
 
 //Aqui van a estar las pantallas
 import Login from './screens/Login';
+import Registro from './screens/Registro';
 import Consejos from './screens/Consejos';
 import Inicio from './screens/Inicio';
 import Multimedia from './screens/Multimedia';
@@ -21,22 +22,32 @@ export type parametrosPantalla = {
     Multimedia: undefined,
     Dia: undefined,
     Noshe: undefined
+    Registro: undefined
 }
 
 const Tab = createBottomTabNavigator<parametrosPantalla>();
 
 
 const Tabs = () => {
-    const [login, setLogin] = useState<boolean>(supabase.auth.getUser() != null)
+    const [cargando, setCargando] = useState<boolean>(true)
+    const [login, setLogin] = useState<boolean>(false)
 
-    supabase.auth.onAuthStateChange((event, session) => {
-        setLogin(session != null)
-    })
-
+    useEffect(() => {
+        setLogin(supabase.auth.getUser() != undefined)
+        setCargando(false)
+        supabase.auth.onAuthStateChange((event, session) => {
+            if(session){
+                if(session.user !== undefined){
+                    setLogin(session != null)
+                }
+            }
+        })
+    }, [])
+    
 
     return (
         <Tab.Navigator>
-            {login ? (
+            {!login ? (
             <>
                 <Tab.Screen name="Inicio" component={Inicio} 
                     options={{
@@ -49,6 +60,7 @@ const Tabs = () => {
                     }} 
                 />
                 <Tab.Screen name="Login" component={Login}/>
+                <Tab.Screen name="Registro" component={Registro}/>
             </>
             ):(
             <>
