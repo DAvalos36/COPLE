@@ -7,7 +7,7 @@ import { supabase } from './supabase';
 //Aqui van a estar las pantallas
 import Login from './screens/Login';
 import Registro from './screens/Registro';
-import Consejos from './screens/Consejos';
+import Consejos from './screens/Consejos2';
 import Inicio from './screens/Inicio';
 import Multimedia from './screens/Multimedia';
 import Dia from './screens/Dia';
@@ -23,6 +23,7 @@ export type parametrosPantalla = {
     Dia: undefined,
     Noshe: undefined
     Registro: undefined
+    C2: undefined
 }
 
 const Tab = createBottomTabNavigator<parametrosPantalla>();
