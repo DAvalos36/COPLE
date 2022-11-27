@@ -33,14 +33,32 @@ const Tabs = () => {
     const [cargando, setCargando] = useState<boolean>(true)
     const [login, setLogin] = useState<boolean>(false)
 
-    useEffect(() => {
-        setLogin(supabase.auth.getUser() != undefined)
+
+    const cargarInfoUsuario = async () => {
+        const { data: { user } } = await supabase.auth.getUser()
+
+        if(user !== null) {
+            setLogin(true)
+            console.log(user.id)
+        }
         setCargando(false)
+    }
+
+    useEffect(() => {
+        cargarInfoUsuario()
+
         supabase.auth.onAuthStateChange((event, session) => {
             if(session){
                 if(session.user !== undefined){
+                    console.log(session.user.id)
                     setLogin(session != null)
                 }
+                else{
+                    setLogin(false)
+                }
+            }
+            else {
+                setLogin(false)
             }
         })
     }, [])
