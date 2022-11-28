@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState, useRef} from 'react'
 import { ImageBackground, View, StyleSheet } from 'react-native'
 import { Button, Text, Calendar, Modal, Card,Input, ButtonGroup, StyleType } from '@ui-kitten/components'
 
@@ -11,9 +11,12 @@ type Props = {}
 
 const buscar = (fe: Date, Arreglo: Calendario_Notas[]): false | Calendario_Notas => {
 
+  
   let fin: Calendario_Notas | false = false
   for(let i = 0; i < Arreglo.length; i++){
-    if (Arreglo[i].fecha == fe) {
+    let fecha = new Date(Arreglo[i].fecha)
+    console.log(`Pos arreglo: ${i}, fecha: ${fecha}, fecha buscada: ${fe}`)
+    if (fecha == fe) {
       return Arreglo[i]
       break
     }
@@ -26,7 +29,8 @@ const buscar = (fe: Date, Arreglo: Calendario_Notas[]): false | Calendario_Notas
 
 
 export default function Dia({}: Props) {
-  let uuid = 'a'
+  // let uuid = 'a'
+  const uuid = useRef('a')
 
   const [notas, setNotas] = useState<Calendario_Notas[]>([])
   const [notaMostar, setNotaMostar] = useState<Calendario_Notas>()
@@ -51,10 +55,11 @@ export default function Dia({}: Props) {
     const info = await supabase
     .from('COUPLE_Calendario_Notas')
     .select('*')
-    .eq('usuario', uuid)
+    .eq('usuario', uuid.current)
 
     const notas = info.data as Calendario_Notas[]
     setNotas(notas)
+    console.log(notas)
     
     
   }
@@ -62,7 +67,7 @@ export default function Dia({}: Props) {
   const cargarInfoUsuario = async () => {
     const { data: { user } } = await supabase.auth.getUser()
 
-    user?.id && (uuid = user.id)
+    user?.id && (uuid.current = user.id)
     console.log('uuid: ', uuid)
 
     cargarNotas()
@@ -89,7 +94,7 @@ export default function Dia({}: Props) {
     const { data, error } = await supabase
     .from('COUPLE_Calendario_Notas')
     .insert([
-      { fecha, animo, nota, usuario: uuid  },
+      { fecha, animo, nota, usuario: uuid.current  },
     ])
 
     if(error){
