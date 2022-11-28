@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import { ImageBackground, View, StyleSheet } from 'react-native'
-import { Button, Text, Calendar, Modal, Card,Input, ButtonGroup } from '@ui-kitten/components'
+import { Button, Text, Calendar, Modal, Card,Input, ButtonGroup, StyleType } from '@ui-kitten/components'
 
 import { supabase } from '../supabase'
 
@@ -8,17 +8,43 @@ import { Calendario_Notas } from '../types'
 
 type Props = {}
 
+
+const buscar = (fe: Date, Arreglo: Calendario_Notas[]): false | Calendario_Notas => {
+
+  let fin: Calendario_Notas | false = false
+  for(let i = 0; i < Arreglo.length; i++){
+    if (Arreglo[i].fecha == fe) {
+      return Arreglo[i]
+      break
+    }
+  }
+
+  return false;
+};
+
+
+
+
 export default function Dia({}: Props) {
-  let uuid = ''
+  let uuid = 'a'
 
   const [notas, setNotas] = useState<Calendario_Notas[]>([])
+  const [notaMostar, setNotaMostar] = useState<Calendario_Notas>()
 
   const [cargando, setCargando] = useState(false)
-  const [modalVisible, setModalVisible] = useState(false)
+  const [modalCrearVisible, setModalCrearVisible] = useState(false)
+  const [modalVerVisible, setModalVerVisible] = useState(false)
   const [fecha, setFecha] = useState<Date>(new Date())
 
   const [nota, setNota] = useState('')
   const [animo, setAnimo] = useState(0)
+
+  const DayCell = ({ date }: {date: Date}, style: StyleType) => (
+    <View
+      style={[stylesDia.dayContainer, style.container]}>
+      <Text style={[style.text, buscar(date, notas ) !== false ? {color: 'red'} : {} ]}>{`${date.getDate()}`}</Text>
+    </View>
+  );
 
   const cargarNotas = async () => {
 
@@ -28,6 +54,7 @@ export default function Dia({}: Props) {
     .eq('usuario', uuid)
 
     const notas = info.data as Calendario_Notas[]
+    setNotas(notas)
     
     
   }
@@ -42,9 +69,15 @@ export default function Dia({}: Props) {
   }
 
   const seleccionarFecha = (fecha: Date) => {
-    setFecha(fecha)
-    setModalVisible(true)
-
+    const res = buscar(fecha, notas)
+    if( res !== false){
+      setNotaMostar(res)
+      setModalVerVisible(true)
+    }
+    else{
+      setModalCrearVisible(true)
+      setFecha(fecha)
+    }
   }
 
   const crearNota = async () => {
@@ -81,8 +114,24 @@ export default function Dia({}: Props) {
   return (
     <View style={{flex:1}}>
 
+        {/* Modal Ver nota */}
         <Modal
-          visible={modalVisible}
+          visible={modalVerVisible}
+          backdropStyle={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}
+          onBackdropPress={() => {}}>
+          <Card disabled={true} style={{ flex:1, alignItems:'center' }}>
+            <Text category='h5'>Nota del dia</Text>
+            {notaMostar?.animo === 0 && <Text>😔</Text>}
+            {notaMostar?.animo === 0 && <Text>😐</Text>}
+            {notaMostar?.animo === 0 && <Text>😊</Text>}
+            <Text>Escribe lo que sientes:</Text>
+            <Button onPress={() => {setModalVerVisible(false)}}>Cancelar</Button>
+          </Card>
+        </Modal>
+
+        {/* Modal crear nota */}
+        <Modal
+          visible={modalCrearVisible}
           backdropStyle={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}
           onBackdropPress={() => {}}>
           <Card disabled={true} style={{ flex:1, alignItems:'center' }}>
@@ -106,7 +155,7 @@ export default function Dia({}: Props) {
               <Button onPress={ crearNota }>
                 Enviar
               </Button>
-              <Button onPress={() => {setModalVisible(false)}} disabled={cargando}>
+              <Button onPress={() => {setModalCrearVisible(false)}} disabled={cargando}>
                 Cancelar
               </Button>
             </View>
@@ -117,8 +166,22 @@ export default function Dia({}: Props) {
         <Text>Pantalla de Dia aqui</Text>
         <Calendar 
           date={new Date()}
+          renderDay={DayCell}
           onSelect={(f) => seleccionarFecha(f) }
         />
     </View>
   )
 }
+
+const stylesDia = StyleSheet.create({
+  dayContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    aspectRatio: 1,
+  },
+  value: {
+    fontSize: 12,
+    fontWeight: '400',
+  },
+});
