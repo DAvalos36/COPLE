@@ -1,25 +1,29 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import { ImageBackground, View, StyleSheet } from 'react-native'
 import { Button, Text, Layout, List, ListItem, Avatar } from '@ui-kitten/components'
 
+import { supabase } from '../supabase'
 interface datosLista {
+  id: number,
+  created_at: string,
   titulo: string,
+  tipo: 1 | 2 | 3 | 4 ,
   descripcion: string,
-  imagen: 'audios' | 'videos' | 'imagenes' | 'documentos'
+  "link-O-texto": string
 }
 const datos:datosLista[] = [
-  {titulo: 'Item 1', descripcion: 'Descripcion 1', imagen: 'audios'},
-  {titulo: 'Item 1', descripcion: 'Descripcion 1', imagen: 'audios'},
-  {titulo: 'Item 1', descripcion: 'Descripcion 1', imagen: 'audios'},
-  {titulo: 'Item 1', descripcion: 'Descripcion 1', imagen: 'audios'},
-  {titulo: 'Item 1', descripcion: 'Descripcion 1', imagen: 'audios'},
-  {titulo: 'Item 1', descripcion: 'Descripcion 1', imagen: 'audios'},
-  {titulo: 'Item 1', descripcion: 'Descripcion 1', imagen: 'audios'},
-  {titulo: 'Item 1', descripcion: 'Descripcion 1', imagen: 'audios'},
-  {titulo: 'Item 1', descripcion: 'Descripcion 1', imagen: 'audios'},
-  {titulo: 'Item 1', descripcion: 'Descripcion 1', imagen: 'documentos'},
-  {titulo: 'Item 1', descripcion: 'Descripcion 1', imagen: 'documentos'},
-  {titulo: 'Item 1', descripcion: 'Descripcion 1', imagen: 'documentos'},
+  { id: 2, created_at: '2',titulo: 'Item 1', descripcion: 'Descripcion 1', tipo:1 , "link-O-texto": ''},
+  { id: 2, created_at: '2',titulo: 'Item 1', descripcion: 'Descripcion 1', tipo:1 , "link-O-texto": ''},
+  { id: 2, created_at: '2',titulo: 'Item 1', descripcion: 'Descripcion 1', tipo:1 , "link-O-texto": ''},
+  { id: 2, created_at: '2',titulo: 'Item 1', descripcion: 'Descripcion 1', tipo:1 , "link-O-texto": ''},
+  { id: 2, created_at: '2',titulo: 'Item 1', descripcion: 'Descripcion 1', tipo:1 , "link-O-texto": ''},
+  { id: 2, created_at: '2',titulo: 'Item 1', descripcion: 'Descripcion 1', tipo:1 , "link-O-texto": ''},
+  { id: 2, created_at: '2',titulo: 'Item 1', descripcion: 'Descripcion 1', tipo:1 , "link-O-texto": ''},
+  { id: 2, created_at: '2',titulo: 'Item 1', descripcion: 'Descripcion 1', tipo:1 , "link-O-texto": ''},
+  { id: 2, created_at: '2',titulo: 'Item 1', descripcion: 'Descripcion 1', tipo:1 , "link-O-texto": ''},
+  { id: 2, created_at: '2',titulo: 'Item 1', descripcion: 'Descripcion 1', tipo: 2, "link-O-texto": ''},
+  { id: 2, created_at: '2',titulo: 'Item 1', descripcion: 'Descripcion 1', tipo: 2, "link-O-texto": ''},
+  { id: 2, created_at: '2',titulo: 'Item 1', descripcion: 'Descripcion 1', tipo: 2, "link-O-texto": ''},
 
 
 ]
@@ -28,22 +32,48 @@ type Props = {}
 
 export default function Multimedia({}: Props) {
 
-  const logoIzquierda = (props: any) => ( 
+  const [info, setInfo] = useState<datosLista[]>([])
+
+  const cargarDatos = async () => {
+    
+    console.log('Cargando datos')
+
+    let { data: COUPLE_Multimedia, error } = await supabase
+    .from('COUPLE_Multimedia')
+    .select('*')
+
+    console.log(COUPLE_Multimedia)
+    setInfo(COUPLE_Multimedia as datosLista[])
+  }
+
+  useEffect(() => {
+    cargarDatos()
+  }, [])
+  
+
+  const logoBocina = (props: any) => ( 
     <Avatar {...props} style={{margin: 8}} size='giant' source={require('../assets/Imagenes/bocina.png')} />
+  );
+  const logoTexto = (props: any) => ( 
+    <Avatar {...props} style={{margin: 8}} size='giant' source={require('../assets/Imagenes/texto.png')} />
   );
 
   const renderItem = ({ item, index }: {item:datosLista, index: number }) => (
     <ListItem 
       title={`${item.titulo} #${index + 1}`} 
       description={item.descripcion}
-      accessoryLeft={logoIzquierda}
+      {...item.tipo === 2 ? { accessoryLeft: logoBocina } : { accessoryLeft: logoTexto }}
       />
   );
 
 
   return (
     <Layout style={{flex:1}}>
-        <List data={datos} renderItem={renderItem} />
+      {info.length !== 0 ? (
+        <List data={info} renderItem={renderItem} />
+      ) : ( 
+        <Text>Cargando... {info.length}</Text>
+      )}
     </Layout>
   )
 }
