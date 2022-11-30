@@ -4,6 +4,8 @@ import { Layout, Text } from '@ui-kitten/components'
 
 type Props = {}
 
+import { consejos } from '../consejos'
+
 const Consejos2 = (props: Props) => {
   return (
     <Layout style={styles.container} >
@@ -13,7 +15,7 @@ const Consejos2 = (props: Props) => {
             </View>
             <View style={styles.contenedorTexto}>
                 <Text category='h5'>Identifica</Text>
-                <Text >Lorem ipsum, dolor sit amet consectetur adipisicing elit. Obcaecati maxime, delectus minima incidunt voluptates aut! Illo voluptas,</Text>
+                <Text >{consejos[0].contenido}</Text>
             </View>
         </View>
         <View style={styles.renglon}>
@@ -22,7 +24,7 @@ const Consejos2 = (props: Props) => {
             </View>
             <View style={styles.contenedorTexto}>
                 <Text category='h5'>Conoce</Text>
-                <Text >Lorem ipsum, dolor sit amet consectetur adipisicing elit. Obcaecati maxime, delectus minima incidunt voluptates aut! Illo voluptas,</Text>
+                <Text >{consejos[1].contenido}</Text>
             </View>
         </View>
         <View style={styles.renglon}>
@@ -31,7 +33,7 @@ const Consejos2 = (props: Props) => {
             </View>
             <View style={styles.contenedorTexto}>
                 <Text category='h5'>Previene</Text>
-                <Text >Lorem ipsum, dolor sit amet consectetur adipisicing elit. Obcaecati maxime, delectus minima incidunt voluptates aut! Illo voluptas,</Text>
+                <Text >{consejos[2].contenido}</Text>
             </View>
         </View>
         <View style={styles.renglon}>
@@ -40,7 +42,7 @@ const Consejos2 = (props: Props) => {
             </View>
             <View style={styles.contenedorTexto}>
                 <Text category='h5'>Concentrate</Text>
-                <Text >Lorem ipsum, dolor sit amet consectetur adipisicing elit. Obcaecati maxime, delectus minima incidunt voluptates aut! Illo voluptas,</Text>
+                <Text >{consejos[3].contenido}</Text>
             </View>
         </View>
         <View style={styles.renglon}>
@@ -49,7 +51,7 @@ const Consejos2 = (props: Props) => {
             </View>
             <View style={styles.contenedorTexto}>
                 <Text category='h5'>Acepta</Text>
-                <Text >Lorem ipsum, dolor sit amet consectetur adipisicing elit. Obcaecati maxime, delectus minima incidunt voluptates aut! Illo voluptas,</Text>
+                <Text >{consejos[4].contenido}</Text>
             </View>
         </View>
     </Layout >
