@@ -7,7 +7,7 @@ export type pantallaConsejos = {
 export type Calendario_Notas = {
     id: number,
     created_at: Date,
-    fecha: Date,
+    fecha: string,
     animo: number,
     nota: string,
     usuario: string
