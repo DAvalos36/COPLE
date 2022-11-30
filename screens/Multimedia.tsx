@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react'
 import { ImageBackground, View, StyleSheet } from 'react-native'
 import { Button, Text, Layout, List, ListItem, Avatar } from '@ui-kitten/components'
+import { Audio } from 'expo-av';
+
 
 import { supabase } from '../supabase'
 interface datosLista {
@@ -30,9 +32,21 @@ const datos:datosLista[] = [
 
 type Props = {}
 
+
 export default function Multimedia({}: Props) {
 
   const [info, setInfo] = useState<datosLista[]>([])
+
+  const audio = async (link: string) => {
+  const sound = new Audio.Sound();
+  await sound.loadAsync({
+    uri: link
+  })
+
+  await sound.playAsync()
+
+    
+  }
 
   const cargarDatos = async () => {
     
@@ -63,6 +77,7 @@ export default function Multimedia({}: Props) {
       title={`${item.titulo} #${index + 1}`} 
       description={item.descripcion}
       {...item.tipo === 2 ? { accessoryLeft: logoBocina } : { accessoryLeft: logoTexto }}
+      {...item.tipo === 2 ? { onPress: () => audio(item["link-O-texto"]) } : { onPress: () => console.log('Texto') }}
       />
   );
 
