@@ -64,7 +64,7 @@ export default function Login({navigation}: Props) {
           <Text category='h4'>¡Bienvendio a la app!</Text>
           <Input placeholder='E-Mail'style={estilos.inputs} onChangeText={(t) => {setEmail(t)}} />
           <Input placeholder='Contraseña'style={estilos.inputs} onChangeText={(t) => {setPassword(t)}} />
-          <Button onPress={iniciarSesion} disabled={cargando} accessoryLeft={ cargando ? LoadingIndicator : undefined } >Iniciar sesion</Button>
+          <Button onPress={iniciarSesion} disabled={cargando} accessoryLeft={ cargando ? LoadingIndicator : undefined } >¡Iniciar sesion!</Button>
           <Text>¿Olvidaste la contraseña?</Text>
         </View>
       </ImageBackground>
