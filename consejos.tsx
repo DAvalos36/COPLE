@@ -136,7 +136,7 @@ producciones mentales conscientes que parecen involuntarias tomando distancia, o
 escenarios realistas y van a parar a escenarios inusuales o improbables. 
 Presta atención a los patrones que generas para poder rebatirlos con un mayor sentido común y no te juzgues por ello; tenemos derecho a sentir 
 miedo ante la incertidumbre, solo se trata de aprender a manejarlo. 
-    `, tipo: 'previene'},
+    `, tipo: 'concentrate'},
     {titulo: '5.-Acepta', contenido: `
     Acepta 
 

@@ -1,9 +1,8 @@
 import React from 'react'
-import { ImageBackground, View, StyleSheet } from 'react-native'
+import { ImageBackground, View, StyleSheet, ScrollView } from 'react-native'
 import { Button, Layout, Text, Avatar } from '@ui-kitten/components'
 
 
-import { pantallaConsejos } from '../types'
 import { StackConsejosScreenProps } from '../navigation/StackConsejo'
 
 enum tipo {
@@ -17,26 +16,29 @@ enum tipo {
 export default function Consejo({route}: StackConsejosScreenProps) {
   const info = route.params
   return (
-    <Layout style={estilos.contenedor}>
+    <ScrollView style={estilos.contenedor}>
         <View style={estilos.header}>
-          <Avatar 
-            source={require('../assets/Imagenes/aceptaIcono.png')} 
-            size='giant'  
-          />
+          {(info.tipo === 'acepta') && <Avatar source={require('../assets/Imagenes/aceptaIcono.png')} size='giant'/> }
+          {(info.tipo === 'concentrate') && <Avatar source={require('../assets/Imagenes/concentrateIcono.png')} size='giant'/> }
+          {(info.tipo === 'conoce') && <Avatar source={require('../assets/Imagenes/conoceIcono.png')} size='giant'/> }
+          {(info.tipo === 'identifica') && <Avatar source={require('../assets/Imagenes/indentificaIcono.png')} size='giant'/> }
+          {(info.tipo === 'previene') && <Avatar source={require('../assets/Imagenes/previeneIcono.png')} size='giant'/> }
+          
         </View>
         <View style={estilos.body}>
           <Text category='h5'>{info.titulo}</Text>
           <Text>{info.contenido}</Text>
         </View>
         {/* <Text>Pantalla de Consejos aqui</Text> */}
-    </Layout>
+    </ScrollView>
   )
 }
 
 const estilos = StyleSheet.create({
   contenedor: {
     flex: 1,
-    padding: 10
+    padding: 10,
+    backgroundColor: 'white'
   },
   header: {
     flex: 2,
@@ -52,7 +54,8 @@ const estilos = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 1,
     borderColor: '#D9D9D9',
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
+    marginVertical: 10
   }
 
 });
