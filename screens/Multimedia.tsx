@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState, useRef} from 'react'
 import { ImageBackground, View, StyleSheet } from 'react-native'
 import { Button, Text, Layout, List, ListItem, Avatar } from '@ui-kitten/components'
 import { Audio } from 'expo-av';
@@ -35,15 +35,25 @@ type Props = {}
 
 export default function Multimedia({}: Props) {
 
+  const sound = new Audio.Sound();
+
+  const reproduciendo = useRef(false)
   const [info, setInfo] = useState<datosLista[]>([])
 
   const audio = async (link: string) => {
-  const sound = new Audio.Sound();
-  await sound.loadAsync({
-    uri: link
-  })
-
-  await sound.playAsync()
+    if(reproduciendo.current){
+      await sound.stopAsync()
+      await sound.unloadAsync()
+      reproduciendo.current = false
+    }
+    else{
+      await sound.loadAsync({
+        uri: link
+      })
+  
+      await sound.playAsync()
+      reproduciendo.current = true
+    }
 
     
   }
