@@ -4,6 +4,7 @@ import { Button, Layout, Text, Avatar } from '@ui-kitten/components'
 
 
 import { pantallaConsejos } from '../types'
+import { StackConsejosScreenProps } from '../navigation/StackConsejo'
 
 enum tipo {
   identifica = '../assets/Imagenes/indentificaIcono.png',
@@ -13,7 +14,8 @@ enum tipo {
   acepta = '../assets/Imagenes/aceptaIcono.png'
 }
 
-export default function Consejo({}: pantallaConsejos) {
+export default function Consejo({route}: StackConsejosScreenProps) {
+  const info = route.params
   return (
     <Layout style={estilos.contenedor}>
         <View style={estilos.header}>
@@ -23,8 +25,8 @@ export default function Consejo({}: pantallaConsejos) {
           />
         </View>
         <View style={estilos.body}>
-          <Text category='h5'>¿Titulo aqui?</Text>
-          <Text>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Amet itaque voluptatibus officiis. Distinctio sunt fuga molestias ea officia, ipsum consequatur repellat, eum reiciendis consequuntur mollitia sequi nesciunt? Nihil, modi ducimus?</Text>
+          <Text category='h5'>{info.titulo}</Text>
+          <Text>{info.contenido}</Text>
         </View>
         {/* <Text>Pantalla de Consejos aqui</Text> */}
     </Layout>

@@ -7,10 +7,11 @@ import { supabase } from './supabase';
 //Aqui van a estar las pantallas
 import Login from './screens/Login';
 import Registro from './screens/Registro';
-import Consejos from './screens/Consejos2';
 import Inicio from './screens/Inicio';
 import Multimedia from './screens/Multimedia';
 import Dia from './screens/Dia';
+
+import { StackConsejo } from './navigation/StackConsejo';
 
 // Interfaces
 import { pantallaConsejos } from './types'
@@ -87,7 +88,7 @@ const Tabs = () => {
 
 
                 <Tab.Screen name='Multimedia' component={Multimedia} />
-                <Tab.Screen name="Consejos" component={Consejos}/>
+                <Tab.Screen name="Consejos" component={StackConsejo}/>
             </>
             )}
         </Tab.Navigator>
