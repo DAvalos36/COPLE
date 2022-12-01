@@ -1,7 +1,7 @@
 export type pantallaConsejos = {
-    titulo?: string,
+    titulo: string,
     contenido?: string,
-    tipo?: 'identifica' | 'conoce' | 'previene' | 'concentrate' | 'acepta'
+    tipo: 'identifica' | 'conoce' | 'previene' | 'concentrate' | 'acepta'
 }
 
 export type Calendario_Notas = {

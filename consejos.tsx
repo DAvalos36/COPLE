@@ -1,10 +1,12 @@
-interface consejo {
+export interface consejo {
     nombre: string,
     contenido: string
 }
 
-const  consejos:consejo[] = [
-    {nombre: '1.- Identifica', contenido: `
+import type { pantallaConsejos } from './types'
+
+const  consejos:pantallaConsejos[] = [
+    {titulo: '1.- Identifica', contenido: `
     Identifica 
     Conoce e Identifica la diferencia y el origen. 
 ¿Qué es la Ansiedad? 
@@ -43,8 +45,8 @@ Por ejemplo cuando debo entregar un proyecto y evaluó que el tiempo que tengo e
 en marcha para intentar finalizar a tiempo, tan pronto como a cabo el proyecto mi estrés desaparecerá. 
 El estrés finaliza cuando la demanda externa acaba, volviendo a nuestro estado habitual o sea reduciéndose la activación fisiológica Cuando 
 el peligro percibido es muy grande, creyendo que nuestra vida está en peligro la intensidad de la ansiedad todavía sube más dando lugar a los 
-    `},
-    {nombre: '2.-Conoce', contenido: `
+    `, tipo: 'identifica'},
+    {titulo: '2.-Conoce', contenido: `
     Conoce 
     Consideraciones y síntomas. 
 Hay dos tipos principales de estrés: 
@@ -99,8 +101,8 @@ Y también puede haber situaciones cotidianas que nos hacen experimentar un exce
 demasiado exigentes, situaciones familiares conflictivas, etc. En todas estas situaciones cotidianas, nosotros podemos reducir nuestro nivel de 
 ansiedad con la ayuda de la respiración diafragmática. 
     
-    `},
-    {nombre: '3.-Previene', contenido: `
+    `, tipo: 'conoce'},
+    {titulo: '3.-Previene', contenido: `
     Previene 
 
     ¿Cómo podemos prevenir el estrés? 
@@ -117,8 +119,8 @@ Procura un equilibrio entre las obligaciones y los placeres.
 Refuérzate cuando consigas alcanzar un objetivo. 
 Si quieres realizar cambios, es mejor empezar por aquellos que sean más pequeños. Recuerda que es más fácil añadir nuevas conductas que 
 eliminar antiguas. Descubre y expresa tus sentimientos: expresa lo que sientes sin hacer daño a los demás. 
-    `},
-    {nombre: '4.-Concentrate', contenido: `
+    `, tipo: 'previene'},
+    {titulo: '4.-Concentrate', contenido: `
     Concéntrate 
 
     Céntrate en lo que está pasando ahora y no en lo que podría pasar. 
@@ -134,8 +136,8 @@ producciones mentales conscientes que parecen involuntarias tomando distancia, o
 escenarios realistas y van a parar a escenarios inusuales o improbables. 
 Presta atención a los patrones que generas para poder rebatirlos con un mayor sentido común y no te juzgues por ello; tenemos derecho a sentir 
 miedo ante la incertidumbre, solo se trata de aprender a manejarlo. 
-    `},
-    {nombre: '5.-Acepta', contenido: `
+    `, tipo: 'previene'},
+    {titulo: '5.-Acepta', contenido: `
     Acepta 
 
     Reconoce y acepta tu ansiedad. 
@@ -152,7 +154,7 @@ enviando señales de calma. Observa sino, ¿cuántas veces que has comenzado a s
 Para tratar la ansiedad hay que aceptar que la esta pueda estar a veces, es una potente herramienta que reduce nuestro nivel constante y 
 diario de alerta, por lo que disminuirá nuestro nivel de tensión corporal y la cantidad de energía que mentalmente invertimos en evitarla; no nos 
 anotaremos tanto. 
-    `},
+    `, tipo: 'acepta'},
 ]
 
 export {consejos}
