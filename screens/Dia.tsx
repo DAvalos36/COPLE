@@ -5,6 +5,8 @@ import { Button, Text, Calendar, Modal, Card,Input, ButtonGroup, StyleType, Layo
 import { supabase } from '../supabase'
 
 import { Calendario_Notas } from '../types'
+import ConsejoDia from '../components/ConsejoDia'
+import { ScrollView } from 'react-native-gesture-handler'
 
 type Props = {}
 
@@ -119,7 +121,7 @@ export default function Dia({}: Props) {
   
 
   return (
-    <Layout style={{flex:1}}>
+    <ScrollView style={stylesDia.container}>
 
         {/* Modal Ver nota */}
         <Modal
@@ -171,19 +173,28 @@ export default function Dia({}: Props) {
         </Modal>
 
 
-        <Text>Pantalla de Dia aqui</Text>
+        {/* <Text>Pantalla de Dia aqui</Text> */}
+        <ConsejoDia />
         {calendarioCargado && (
-          <Calendar 
-            date={new Date()}
-            renderDay={DayCell}
-            onSelect={(f) => seleccionarFecha(f) }
-          />
+          <View style={{alignItems:'center', paddingVertical: 10}}>
+            <Calendar 
+              date={new Date()}
+              renderDay={DayCell}
+              onSelect={(f) => seleccionarFecha(f) }
+            />
+          </View>
         )}
-    </Layout>
+    </ScrollView>
   )
 }
 
 const stylesDia = StyleSheet.create({
+  container: {
+    flex: 1,
+    // justifyContent: 'space-around',
+    // alignItems: 'center',
+    backgroundColor: '#FFF'
+  },
   dayContainer: {
     flex: 1,
     justifyContent: 'center',
