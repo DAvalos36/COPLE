@@ -1,6 +1,6 @@
 import React, {useEffect, useState, useRef} from 'react'
 import { ImageBackground, View, StyleSheet } from 'react-native'
-import { Button, Text, Calendar, Modal, Card,Input, ButtonGroup, StyleType } from '@ui-kitten/components'
+import { Button, Text, Calendar, Modal, Card,Input, ButtonGroup, StyleType, Layout } from '@ui-kitten/components'
 
 import { supabase } from '../supabase'
 
@@ -14,9 +14,9 @@ const buscar = (fe: Date, Arreglo: Calendario_Notas[]): false | Calendario_Notas
   
   let fin: Calendario_Notas | false = false
   for(let i = 0; i < Arreglo.length; i++){
-    let fecha = new Date(Arreglo[i].fecha)
-    console.log(`Pos arreglo: ${i}, fecha: ${fecha}, fecha buscada: ${fe}`)
-    if (fecha == fe) {
+    let fecha2 = `${fe.getFullYear()}-${fe.getMonth() + 1}-${fe.getDate()}`
+    console.log(`Pos arreglo: ${i}, fecha: ${Arreglo[i].fecha}, fecha buscada: ${fecha2}`)
+    if (fecha2 == Arreglo[i].fecha) {
       return Arreglo[i]
       break
     }
@@ -35,6 +35,7 @@ export default function Dia({}: Props) {
   const [notas, setNotas] = useState<Calendario_Notas[]>([])
   const [notaMostar, setNotaMostar] = useState<Calendario_Notas>()
 
+  const [calendarioCargado, setCalendarioCargado] = useState(false)
   const [cargando, setCargando] = useState(false)
   const [modalCrearVisible, setModalCrearVisible] = useState(false)
   const [modalVerVisible, setModalVerVisible] = useState(false)
@@ -59,6 +60,7 @@ export default function Dia({}: Props) {
 
     const notas = info.data as Calendario_Notas[]
     setNotas(notas)
+    setCalendarioCargado(true)
     console.log(notas)
     
     
@@ -117,7 +119,7 @@ export default function Dia({}: Props) {
   
 
   return (
-    <View style={{flex:1}}>
+    <Layout style={{flex:1}}>
 
         {/* Modal Ver nota */}
         <Modal
@@ -125,11 +127,12 @@ export default function Dia({}: Props) {
           backdropStyle={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}
           onBackdropPress={() => {}}>
           <Card disabled={true} style={{ flex:1, alignItems:'center' }}>
-            <Text category='h5'>Nota del dia</Text>
-            {notaMostar?.animo === 0 && <Text>😔</Text>}
-            {notaMostar?.animo === 0 && <Text>😐</Text>}
-            {notaMostar?.animo === 0 && <Text>😊</Text>}
+            <Text category='h5' >Nota del dia</Text>
+            {notaMostar?.animo === 1 && <Text style={{ justifyContent: 'center' }}>😔</Text>}
+            {notaMostar?.animo === 2 && <Text style={{ justifyContent: 'center' }}>😐</Text>}
+            {notaMostar?.animo === 3 && <Text style={{ justifyContent: 'center' }}>😊</Text>}
             <Text>Escribe lo que sientes:</Text>
+            <Text >{notaMostar?.nota}</Text>
             <Button onPress={() => {setModalVerVisible(false)}}>Cancelar</Button>
           </Card>
         </Modal>
@@ -169,12 +172,14 @@ export default function Dia({}: Props) {
 
 
         <Text>Pantalla de Dia aqui</Text>
-        <Calendar 
-          date={new Date()}
-          renderDay={DayCell}
-          onSelect={(f) => seleccionarFecha(f) }
-        />
-    </View>
+        {calendarioCargado && (
+          <Calendar 
+            date={new Date()}
+            renderDay={DayCell}
+            onSelect={(f) => seleccionarFecha(f) }
+          />
+        )}
+    </Layout>
   )
 }
 
