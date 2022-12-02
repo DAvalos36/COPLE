@@ -5,26 +5,9 @@ import { BottomTabBarButtonProps } from '@react-navigation/bottom-tabs'
 
 import { supabase } from '../supabase'
 
+import type { NavigationDrawerProp2 } from '../Navigations'
 
-type Props = {
-  navigation: BottomTabBarButtonProps
-}
-
-
-const PersonIcon = () => (
-  <Icon name='person-outline'/>
-);
-
-const BellIcon = () => (
-  <Icon name='bell-outline'/>
-);
-
-const EmailIcon = () => (
-  <Icon name='email-outline'/>
-);
-
-
-export default function Registro({navigation}: Props) {
+export default function Registro({navigation}: NavigationDrawerProp2) {
   
   // const bottomState = useBottomNa
 
@@ -45,16 +28,21 @@ export default function Registro({navigation}: Props) {
   }
   
   return (
-    <View style={{flex:1, justifyContent:'space-between', padding: 8}}>
-        <Text>Pantalla de Login aqui</Text>
-        <View style={estilos.formulario}>
-          <Text>Aqui van botones!</Text>
-          <Text category='h4'>¡Bienvendio a la app!</Text>
-          <Input placeholder='E-Mail'style={estilos.inputs} onChangeText={(t) => {setEmail( t )}}/>
-          <Input placeholder='Contraseña'style={estilos.inputs} onChangeText={(t) => {setPassword(t)}} />
-          <Button onPress={registro} >Registrarme</Button>
-          <Text>¿Olvidaste la contraseña?</Text>
-        </View>
+    <View style={{flex:1, justifyContent:'space-between'}}>
+        <ImageBackground source={require('../assets/Imagenes/bg-login-registro.png')} style={{ flex: 1, justifyContent:'flex-end', padding: 8, backgroundColor: '#E2DFDF' }} >
+          <View style={estilos.formulario}>
+            <View style={{ flexDirection:'row', justifyContent: 'space-evenly', width: '100%' }}>
+              <Button onPress={() => navigation.jumpTo('Login')}>login</Button>
+              <Button disabled>Registrarse</Button>
+            </View>
+            <Text>Aqui van botones!</Text>
+            <Text category='h4'>¡Bienvendio a la app!</Text>
+            <Input placeholder='E-Mail'style={estilos.inputs} onChangeText={(t) => {setEmail( t )}}/>
+            <Input secureTextEntry placeholder='Contraseña'style={estilos.inputs} onChangeText={(t) => {setPassword(t)}} />
+            <Button onPress={registro} >Registrarme</Button>
+            <Text>¿Olvidaste la contraseña?</Text>
+          </View>
+        </ImageBackground>
         
 
     </View>
@@ -66,11 +54,12 @@ const estilos = StyleSheet.create({
     flexDirection:'column',
     alignItems: 'center',
     justifyContent: 'space-evenly',
-    marginHorizontal: 40,
+    marginHorizontal: 30,
     padding: 20,
     height: 500,
     backgroundColor: 'white',
     borderRadius: 50,
+    marginBottom: 24
   },
   inputs: {
     borderRightWidth: 0,

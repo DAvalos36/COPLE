@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import { createDrawerNavigator, DrawerScreenProps } from '@react-navigation/drawer';
 import { NavigationContainer,  } from '@react-navigation/native';
 import { supabase } from './supabase';
 
@@ -30,6 +30,9 @@ export type parametrosPantalla = {
 
 const Tab = createBottomTabNavigator<parametrosPantalla>();
 const Drawer = createDrawerNavigator<parametrosPantalla>();
+
+export type NavigationDrawerProp = DrawerScreenProps<parametrosPantalla, 'Login'>;
+export type NavigationDrawerProp2 = DrawerScreenProps<parametrosPantalla, 'Registro'>;
 
 
 const Tabs = () => {
@@ -78,14 +81,20 @@ const Tabs = () => {
                         // Oculta la barra de navegacion
                     }} 
                 />
-                <Drawer.Screen name="Login" component={Login}/>
-                <Drawer.Screen name="Registro" component={Registro}/>
+                <Drawer.Screen name="Login" component={Login}
+                    options={{
+                        headerShown: false,
+                    }}
+                />
+                <Drawer.Screen name="Registro" component={Registro}
+                    options={{
+                        headerShown: false,
+                    }}
+                />
             </>
             ):(
             <>
                 <Drawer.Screen name="Dia" component={Dia}/>
-
-
                 <Drawer.Screen name='Multimedia' component={Multimedia} />
                 <Drawer.Screen name="Consejos" component={StackConsejo}/>
             </>

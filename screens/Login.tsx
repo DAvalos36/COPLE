@@ -5,26 +5,10 @@ import { BottomTabBarButtonProps } from '@react-navigation/bottom-tabs'
 
 import { supabase } from '../supabase'
 
-
-type Props = {
-  navigation: BottomTabBarButtonProps
-}
+import type { NavigationDrawerProp } from '../Navigations'
 
 
-const PersonIcon = () => (
-  <Icon name='person-outline'/>
-);
-
-const BellIcon = () => (
-  <Icon name='bell-outline'/>
-);
-
-const EmailIcon = () => (
-  <Icon name='email-outline'/>
-);
-
-
-export default function Login({navigation}: Props) {
+export default function Login({navigation}: NavigationDrawerProp) {
   const [cargando, setCargando] = useState<boolean>(false)
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
@@ -56,14 +40,14 @@ export default function Login({navigation}: Props) {
     <View style={{flex:1}}>
       <ImageBackground source={require('../assets/Imagenes/bg-login-registro.png')} style={{ flex: 1, justifyContent:'flex-end', padding: 8, backgroundColor: '#E2DFDF' }} >
         <View style={estilos.formulario}>
-          <View style={{ flexDirection:'row' }}>
-            <Button>a</Button>
-            <Button>b</Button>
+          <View style={{ flexDirection:'row', justifyContent: 'space-evenly', width: '100%' }}>
+            <Button disabled>login</Button>
+            <Button onPress={() => navigation.jumpTo('Registro')}>Registrarse</Button>
           </View>
           {/* <Text>Aqui van botones!</Text> */}
           <Text category='h4'>¡Bienvendio a la app!</Text>
           <Input placeholder='E-Mail'style={estilos.inputs} onChangeText={(t) => {setEmail(t)}} />
-          <Input placeholder='Contraseña'style={estilos.inputs} onChangeText={(t) => {setPassword(t)}} />
+          <Input secureTextEntry placeholder='Contraseña'style={estilos.inputs} onChangeText={(t) => {setPassword(t)}} />
           <Button onPress={iniciarSesion} disabled={cargando} accessoryLeft={ cargando ? LoadingIndicator : undefined } >¡Iniciar sesion!</Button>
           <Text>¿Olvidaste la contraseña?</Text>
         </View>
